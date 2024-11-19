@@ -94,24 +94,55 @@ const shoppingItems = [
 ];
 
 function App() {
-  // State to hold the selected shopping items
+  // State to hold the selected shopping items with quantity
   const [selectedItems, setSelectedItems] = useState([]);
 
   // Function to add an item to the shopping list
   const addItem = (item) => {
-    // Check if the item is already in the shopping list
-    if (!selectedItems.find((i) => i.id === item.id)) {
-      setSelectedItems([...selectedItems, item]);
-    }
+    setSelectedItems((prevItems) => {
+      const existingItem = prevItems.find((i) => i.id === item.id);
+      if (existingItem) {
+        // Increment quantity if item already exists
+        return prevItems.map((i) =>
+          i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
+        );
+      } else {
+        // Add new item with quantity 1
+        return [...prevItems, { ...item, quantity: 1 }];
+      }
+    });
   };
 
   // Function to remove an item from the shopping list
   const removeItem = (itemId) => {
-    setSelectedItems(selectedItems.filter((item) => item.id !== itemId));
+    setSelectedItems((prevItems) => prevItems.filter((item) => item.id !== itemId));
+  };
+
+  // Function to increment item quantity
+  const incrementItem = (itemId) => {
+    setSelectedItems((prevItems) =>
+      prevItems.map((item) =>
+        item.id === itemId ? { ...item, quantity: item.quantity + 1 } : item
+      )
+    );
+  };
+
+  // Function to decrement item quantity
+  const decrementItem = (itemId) => {
+    setSelectedItems((prevItems) =>
+      prevItems
+        .map((item) =>
+          item.id === itemId ? { ...item, quantity: item.quantity - 1 } : item
+        )
+        .filter((item) => item.quantity > 0)
+    );
   };
 
   // Calculate total price
-  const totalPrice = selectedItems.reduce((total, item) => total + item.price, 0);
+  const totalPrice = selectedItems.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0
+  );
 
   return (
     <div className="App">
@@ -137,12 +168,7 @@ function App() {
                   <td>{item.name}</td>
                   <td>{item.price.toFixed(2)}</td>
                   <td>
-                    <button
-                      onClick={() => addItem(item)}
-                      disabled={selectedItems.find((i) => i.id === item.id)}
-                    >
-                      {selectedItems.find((i) => i.id === item.id) ? 'Added' : 'Add'}
-                    </button>
+                    <button onClick={() => addItem(item)}>Add</button>
                   </td>
                 </tr>
               ))}
@@ -161,6 +187,8 @@ function App() {
                   <th>Category</th>
                   <th>Item Name</th>
                   <th>Price ($)</th>
+                  <th>Quantity</th>
+                  <th>Subtotal ($)</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -170,6 +198,14 @@ function App() {
                     <td>{item.category}</td>
                     <td>{item.name}</td>
                     <td>{item.price.toFixed(2)}</td>
+                    <td>
+                      <div className="plus-minus-container">
+                        <button onClick={() => decrementItem(item.id)}>-</button>
+                        <span className="quantity">{item.quantity}</span>
+                        <button onClick={() => incrementItem(item.id)}>+</button>
+                      </div>
+                    </td>
+                    <td>{(item.price * item.quantity).toFixed(2)}</td>
                     <td>
                       <button onClick={() => removeItem(item.id)}>Remove</button>
                     </td>
