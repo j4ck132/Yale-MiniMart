@@ -189,7 +189,6 @@ function App() {
                   <th>Price ($)</th>
                   <th>Quantity</th>
                   <th>Subtotal ($)</th>
-                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -206,9 +205,6 @@ function App() {
                       </div>
                     </td>
                     <td>{(item.price * item.quantity).toFixed(2)}</td>
-                    <td>
-                      <button onClick={() => removeItem(item.id)}>Remove</button>
-                    </td>
                   </tr>
                 ))}
               </tbody>
