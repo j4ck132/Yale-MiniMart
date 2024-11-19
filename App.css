@@ -55,6 +55,14 @@ button:hover:not(:disabled) {
   background-color: #0056b3;
 }
 
+.quantity {
+  margin: 0 10px;
+  min-width: 20px;
+  display: inline-block;
+  text-align: center;
+  font-weight: bold; /* Make the quantity stand out */
+}
+
 .total-price {
   margin-top: 20px;
   font-size: 1.2em; /* Slightly larger font */
@@ -95,6 +103,28 @@ button:hover:not(:disabled) {
   /* Prevent Shopping List from scrolling */
   max-height: 100%;
   overflow: hidden;
+}
+
+/* Plus-Minus Container Styles */
+.plus-minus-container {
+  display: flex;
+  align-items: center;
+}
+
+.plus-minus-container button {
+  padding: 4px 8px; /* Adjust padding for smaller buttons */
+  font-size: 1em;    /* Ensure consistent font size */
+  margin: 0 5px;     /* Space between buttons and quantity */
+  width: 30px;       /* Consistent button width */
+  height: 30px;      /* Consistent button height */
+  border-radius: 4px;
+}
+
+.plus-minus-container .quantity {
+  min-width: 20px;
+  text-align: center;
+  display: inline-block;
+  font-weight: bold; /* Make the quantity stand out */
 }
 
 /* Optional: Custom Scrollbar for Available Items */
