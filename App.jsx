@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
 
-// Define the shopping items
+// Define the shopping items (same as before)
 const shoppingItems = [
   { id: 1, name: "Soup of the Day", price: 6, category: "Lunch" },
   { id: 2, name: "Grilled Cheese", price: 6.5, category: "Lunch" },
@@ -117,42 +117,10 @@ function App() {
     <div className="App">
       <h1>Yale Steep Shopping</h1>
       
-      <div className="item-list">
-        <h2>Available Items</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Category</th>
-              <th>Item Name</th>
-              <th>Price ($)</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {shoppingItems.map((item) => (
-              <tr key={item.id}>
-                <td>{item.category}</td>
-                <td>{item.name}</td>
-                <td>{item.price.toFixed(2)}</td>
-                <td>
-                  <button
-                    onClick={() => addItem(item)}
-                    disabled={selectedItems.find((i) => i.id === item.id)}
-                  >
-                    {selectedItems.find((i) => i.id === item.id) ? 'Added' : 'Add'}
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-      
-      <div className="shopping-list">
-        <h2>My Shopping List</h2>
-        {selectedItems.length === 0 ? (
-          <p>No items selected.</p>
-        ) : (
+      {/* Wrapper for the two sections */}
+      <div className="lists-container">
+        <div className="item-list">
+          <h2>Available Items</h2>
           <table>
             <thead>
               <tr>
@@ -163,21 +131,56 @@ function App() {
               </tr>
             </thead>
             <tbody>
-              {selectedItems.map((item) => (
+              {shoppingItems.map((item) => (
                 <tr key={item.id}>
                   <td>{item.category}</td>
                   <td>{item.name}</td>
                   <td>{item.price.toFixed(2)}</td>
                   <td>
-                    <button onClick={() => removeItem(item.id)}>Remove</button>
+                    <button
+                      onClick={() => addItem(item)}
+                      disabled={selectedItems.find((i) => i.id === item.id)}
+                    >
+                      {selectedItems.find((i) => i.id === item.id) ? 'Added' : 'Add'}
+                    </button>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
-        )}
-        <div className="total-price">
-          <strong>Total Price: ${totalPrice.toFixed(2)}</strong>
+        </div>
+        
+        <div className="shopping-list">
+          <h2>My Shopping List</h2>
+          {selectedItems.length === 0 ? (
+            <p>No items selected.</p>
+          ) : (
+            <table>
+              <thead>
+                <tr>
+                  <th>Category</th>
+                  <th>Item Name</th>
+                  <th>Price ($)</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {selectedItems.map((item) => (
+                  <tr key={item.id}>
+                    <td>{item.category}</td>
+                    <td>{item.name}</td>
+                    <td>{item.price.toFixed(2)}</td>
+                    <td>
+                      <button onClick={() => removeItem(item.id)}>Remove</button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+          <div className="total-price">
+            <strong>Total Price: ${totalPrice.toFixed(2)}</strong>
+          </div>
         </div>
       </div>
     </div>
