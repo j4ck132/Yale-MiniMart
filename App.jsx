@@ -138,6 +138,16 @@ function App() {
     );
   };
 
+  const removeAllItem = (itemId) => {
+    setSelectedItems((prevItems) =>
+      prevItems
+        .map((item) =>
+          item.id === itemId ? { ...item, quantity: 0 } : item
+        )
+        .filter((item) => item.quantity > 0)
+    );
+  };
+
   // Calculate total price
   const totalPrice = selectedItems.reduce(
     (total, item) => total + item.price * item.quantity,
@@ -189,6 +199,7 @@ function App() {
                   <th>Price ($)</th>
                   <th>Quantity</th>
                   <th>Subtotal ($)</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -205,6 +216,9 @@ function App() {
                       </div>
                     </td>
                     <td>{(item.price * item.quantity).toFixed(2)}</td>
+                    <td>
+                      <button onClick={() => removeAllItem(item.id)}>remove</button>
+                  </td>
                   </tr>
                 ))}
               </tbody>
