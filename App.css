@@ -112,16 +112,16 @@ button:hover:not(:disabled) {
 }
 
 .plus-minus-container button {
-  padding: 4px 8px; /* Adjust padding for smaller buttons */
+  padding: 1px 2px; /* Adjust padding for smaller buttons */
   font-size: 1em;    /* Ensure consistent font size */
-  margin: 0 5px;     /* Space between buttons and quantity */
-  width: 30px;       /* Consistent button width */
-  height: 30px;      /* Consistent button height */
-  border-radius: 4px;
+  margin: 0px;     /* Space between buttons and quantity */
+  width: 20px;       /* Consistent button width */
+  height: 20px;      /* Consistent button height */
+  border-radius: 2px;
 }
 
 .plus-minus-container .quantity {
-  min-width: 20px;
+  min-width: 0px;
   text-align: center;
   display: inline-block;
   font-weight: bold; /* Make the quantity stand out */
