@@ -70,6 +70,7 @@ button:hover:not(:disabled) {
   flex-wrap: wrap; /* Allows wrapping on smaller screens */
   gap: 20px; /* Space between the two lists */
   margin-top: 30px; /* Added margin to separate from h1 */
+  height: 600px; /* Set a fixed height for the container */
 }
 
 /* Individual Lists Styling */
@@ -80,10 +81,48 @@ button:hover:not(:disabled) {
   padding: 20px;
   border-radius: 6px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.item-list {
+  /* Make Available Items scrollable */
+  max-height: 100%;
+  overflow-y: auto;
+}
+
+.shopping-list {
+  /* Prevent Shopping List from scrolling */
+  max-height: 100%;
+  overflow: hidden;
+}
+
+/* Optional: Custom Scrollbar for Available Items */
+.item-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.item-list::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.item-list::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+.item-list::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
 }
 
 @media (max-width: 768px) {
   .lists-container {
     flex-direction: column;
+    height: auto; /* Remove fixed height on smaller screens */
+  }
+
+  .item-list, .shopping-list {
+    max-height: none;
   }
 }
