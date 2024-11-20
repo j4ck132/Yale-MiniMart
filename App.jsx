@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 
 // Define the shopping items (same as before)
@@ -101,6 +101,13 @@ function App() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
 
+  // State for sorting
+  const [sortOrder, setSortOrder] = useState('asc'); // 'asc' or 'desc'
+
+  // State for price cap
+  const [isPriceCapEnabled, setIsPriceCapEnabled] = useState(false);
+  const PRICE_CAP = 12; // Fixed price cap
+
   // Extract unique categories
   const categories = ['All', ...new Set(shoppingItems.map(item => item.category))];
 
@@ -171,11 +178,25 @@ function App() {
     setSelectedCategory(e.target.value);
   };
 
+  // Handle sort order change
+  const handleSortOrderChange = (e) => {
+    setSortOrder(e.target.value);
+  };
+
   // Filter items based on search and category
   const filteredItems = shoppingItems.filter(item => {
     const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = selectedCategory === 'All' || item.category === selectedCategory;
     return matchesSearch && matchesCategory;
+  });
+
+  // Sort filtered items based on sortOrder
+  const sortedItems = filteredItems.sort((a, b) => {
+    if (sortOrder === 'asc') {
+      return a.price - b.price;
+    } else {
+      return b.price - a.price;
+    }
   });
 
   return (
@@ -198,6 +219,39 @@ function App() {
               <option key={category} value={category}>{category}</option>
             ))}
           </select>
+
+          {/* Sort Toggle */}
+          <div className="toggle-container">
+            <label htmlFor="sortOrder">Sort by Price: </label>
+            <select id="sortOrder" value={sortOrder} onChange={handleSortOrderChange}>
+              <option value="asc">Ascending</option>
+              <option value="desc">Descending</option>
+            </select>
+          </div>
+
+          {/* Price Cap Toggle */}
+          <div className="toggle-container">
+            <input
+              type="checkbox"
+              id="priceCapToggle"
+              checked={isPriceCapEnabled}
+              onChange={(e) => setIsPriceCapEnabled(e.target.checked)}
+            />
+            <label htmlFor="priceCapToggle">Enable $12 Price Cap</label>
+          </div>
+
+          {/* Price Cap Status Message */}
+          {isPriceCapEnabled && totalPrice > PRICE_CAP && (
+            <div className="price-cap-status">
+              Total price exceeds the $12 cap!
+            </div>
+          )}
+          {/* Optional: Display Price Cap Status */}
+          {isPriceCapEnabled && (
+            <p className="price-cap-status">
+              {totalPrice >= 12 ? "Price cap reached." : `Remaining: $${(12 - totalPrice).toFixed(2)}`}
+            </p>
+          )}
         </div>
 
         {/* Available Items */}
@@ -213,16 +267,29 @@ function App() {
               </tr>
             </thead>
             <tbody>
-              {filteredItems.map((item) => (
-                <tr key={item.id}>
-                  <td>{item.category}</td>
-                  <td>{item.name}</td>
-                  <td>{item.price.toFixed(2)}</td>
-                  <td>
-                    <button onClick={() => addItem(item)}>Add</button>
-                  </td>
-                </tr>
-              ))}
+              {sortedItems.map((item) => {
+                // Determine if the "Add" button should be disabled
+                const wouldExceedCap = isPriceCapEnabled && (totalPrice + item.price) > PRICE_CAP;
+                return (
+                  <tr key={item.id}>
+                    <td>{item.category}</td>
+                    <td>{item.name}</td>
+                    <td>{item.price.toFixed(2)}</td>
+                    <td>
+                      <button
+                        onClick={() => addItem(item)}
+                        disabled={wouldExceedCap}
+                        style={{
+                          backgroundColor: wouldExceedCap ? '#aaa' : undefined,
+                          cursor: wouldExceedCap ? 'not-allowed' : 'pointer'
+                        }}
+                      >
+                        Add
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
@@ -259,7 +326,7 @@ function App() {
                     </td>
                     <td>{(item.price * item.quantity).toFixed(2)}</td>
                     <td>
-                      <button onClick={() => removeAllItem(item.id)}>remove</button>
+                      <button onClick={() => removeAllItem(item.id)}>Remove</button>
                     </td>
                   </tr>
                 ))}
