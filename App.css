@@ -1,7 +1,7 @@
 /* General Styles */
 .App {
   font-family: Arial, sans-serif;
-  max-width: 1200px; /* Increased width for better spacing */
+  max-width: 1500px; /* Increased width for better spacing */
   margin: 0 auto;
   padding: 20px;
   background-color: #f5f5f5;
@@ -76,14 +76,57 @@ button:hover:not(:disabled) {
 .lists-container {
   display: flex;
   flex-wrap: wrap; /* Allows wrapping on smaller screens */
-  gap: 20px; /* Space between the two lists */
+  gap: 20px; /* Space between the three lists */
   margin-top: 30px; /* Added margin to separate from h1 */
-  height: 600px; /* Set a fixed height for the container */
+  height: 600px
+}
+
+/* Search and Sort Panel Styling */
+.search-sort-panel {
+  flex: 1;
+  min-width: 200px; /* Ensure minimum width for responsiveness */
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  height: 400px;
+}
+
+.search-sort-panel h2 {
+  border-bottom: none; /* Remove bottom border to match layout */
+  margin-bottom: 15px; /* Add spacing below the header */
+}
+
+.search-sort-panel input {
+  padding: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.search-sort-panel select {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
 /* Individual Lists Styling */
-.item-list, .shopping-list {
-  flex: 1;
+.shopping-list {
+  flex: 2;
+  min-width: 550px; /* Ensures minimum width for responsiveness */
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  height: 500px;
+}
+
+.item-list {
+  flex: 2;
   min-width: 300px; /* Ensures minimum width for responsiveness */
   background-color: #fff;
   padding: 20px;
@@ -91,18 +134,15 @@ button:hover:not(:disabled) {
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   display: flex;
   flex-direction: column;
+  height: 650px;
 }
 
 .item-list {
-  /* Make Available Items scrollable */
-  max-height: 100%;
-  overflow-y: auto;
+  overflow-y: auto; /* Make Available Items scrollable if needed */
 }
 
 .shopping-list {
-  /* Prevent Shopping List from scrolling */
-  max-height: 100%;
-  overflow: hidden;
+  overflow: auto; /* Prevent Shopping List from scrolling */
 }
 
 /* Plus-Minus Container Styles */
@@ -114,9 +154,9 @@ button:hover:not(:disabled) {
 .plus-minus-container button {
   padding: 1px 2px; /* Adjust padding for smaller buttons */
   font-size: 1em;    /* Ensure consistent font size */
-  margin: 0px;     /* Space between buttons and quantity */
-  width: 20px;       /* Consistent button width */
-  height: 20px;      /* Consistent button height */
+  margin: 0px;        /* Space between buttons and quantity */
+  width: 20px;        /* Consistent button width */
+  height: 20px;       /* Consistent button height */
   border-radius: 2px;
 }
 
@@ -149,10 +189,9 @@ button:hover:not(:disabled) {
 @media (max-width: 768px) {
   .lists-container {
     flex-direction: column;
-    height: auto; /* Remove fixed height on smaller screens */
   }
 
-  .item-list, .shopping-list {
-    max-height: none;
+  .search-sort-panel, .item-list, .shopping-list {
+    min-width: 100%;
   }
 }
