@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 
-// Define the shopping items (same as before)
 const shoppingItems = [
   { id: 1, name: "Soup of the Day", price: 6, category: "Lunch" },
   { id: 2, name: "Grilled Cheese", price: 6.5, category: "Lunch" },
