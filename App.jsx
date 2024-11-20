@@ -97,6 +97,13 @@ function App() {
   // State to hold the selected shopping items with quantity
   const [selectedItems, setSelectedItems] = useState([]);
 
+  // State for search and category filter
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('All');
+
+  // Extract unique categories
+  const categories = ['All', ...new Set(shoppingItems.map(item => item.category))];
+
   // Function to add an item to the shopping list
   const addItem = (item) => {
     setSelectedItems((prevItems) => {
@@ -138,6 +145,7 @@ function App() {
     );
   };
 
+  // Function to remove all quantities of an item
   const removeAllItem = (itemId) => {
     setSelectedItems((prevItems) =>
       prevItems
@@ -154,12 +162,45 @@ function App() {
     0
   );
 
+  // Handle search and category changes
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const handleCategoryChange = (e) => {
+    setSelectedCategory(e.target.value);
+  };
+
+  // Filter items based on search and category
+  const filteredItems = shoppingItems.filter(item => {
+    const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesCategory = selectedCategory === 'All' || item.category === selectedCategory;
+    return matchesSearch && matchesCategory;
+  });
+
   return (
     <div className="App">
       <h1>Yale Steep Shopping</h1>
       
-      {/* Wrapper for the two sections */}
+      {/* Wrapper for the three sections */}
       <div className="lists-container">
+        {/* Search and Sort Panel */}
+        <div className="search-sort-panel">
+          <h2>Search & Sort</h2>
+          <input
+            type="text"
+            placeholder="Search items..."
+            value={searchTerm}
+            onChange={handleSearchChange}
+          />
+          <select value={selectedCategory} onChange={handleCategoryChange}>
+            {categories.map(category => (
+              <option key={category} value={category}>{category}</option>
+            ))}
+          </select>
+        </div>
+
+        {/* Available Items */}
         <div className="item-list">
           <h2>Available Items</h2>
           <table>
@@ -172,7 +213,7 @@ function App() {
               </tr>
             </thead>
             <tbody>
-              {shoppingItems.map((item) => (
+              {filteredItems.map((item) => (
                 <tr key={item.id}>
                   <td>{item.category}</td>
                   <td>{item.name}</td>
@@ -186,6 +227,7 @@ function App() {
           </table>
         </div>
         
+        {/* Shopping List */}
         <div className="shopping-list">
           <h2>My Shopping List</h2>
           {selectedItems.length === 0 ? (
@@ -218,7 +260,7 @@ function App() {
                     <td>{(item.price * item.quantity).toFixed(2)}</td>
                     <td>
                       <button onClick={() => removeAllItem(item.id)}>remove</button>
-                  </td>
+                    </td>
                   </tr>
                 ))}
               </tbody>
