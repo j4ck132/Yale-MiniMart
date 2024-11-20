@@ -1,7 +1,6 @@
-/* General Styles */
 .App {
   font-family: Arial, sans-serif;
-  max-width: 1600px; /* Increased width for better spacing */
+  max-width: 1600px;
   margin: 0 auto;
   padding: 20px;
   background-color: #f5f5f5;
@@ -17,7 +16,7 @@ h2 {
   color: #555;
   border-bottom: 2px solid #ddd;
   padding-bottom: 10px;
-  margin-bottom: 15px; /* Added margin for spacing */
+  margin-bottom: 15px;
 }
 
 table {
@@ -61,31 +60,29 @@ button:hover:not(:disabled) {
   min-width: 20px;
   display: inline-block;
   text-align: center;
-  font-weight: bold; /* Make the quantity stand out */
+  font-weight: bold; 
 }
 
 .total-price {
   margin-top: 20px;
-  font-size: 1.2em; /* Slightly larger font */
+  font-size: 1.2em; 
   text-align: right;
   color: #333;
   padding-top: 10px;
-  border-top: 2px solid #ddd; /* Added border for separation */
+  border-top: 2px solid #ddd; 
 }
 
-/* Flex Container for Lists */
 .lists-container {
   display: flex;
-  flex-wrap: wrap; /* Allows wrapping on smaller screens */
-  gap: 20px; /* Space between the three lists */
-  margin-top: 30px; /* Added margin to separate from h1 */
+  flex-wrap: wrap; 
+  gap: 20px; 
+  margin-top: 30px; 
   height: 700px;
 }
 
-/* Search and Sort Panel Styling */
 .search-sort-panel {
   flex: 1;
-  min-width: 250px; /* Ensure minimum width for responsiveness */
+  min-width: 250px; 
   background-color: #fff;
   padding: 20px;
   border-radius: 6px;
@@ -96,8 +93,8 @@ button:hover:not(:disabled) {
 }
 
 .search-sort-panel h2 {
-  border-bottom: none; /* Remove bottom border to match layout */
-  margin-bottom: 15px; /* Add spacing below the header */
+  border-bottom: none; 
+  margin-bottom: 15px;
 }
 
 .search-sort-panel input {
@@ -113,7 +110,6 @@ button:hover:not(:disabled) {
   border-radius: 4px;
 }
 
-/* Toggle Container Styles */
 .toggle-container {
   display: flex;
   align-items: center;
@@ -130,17 +126,15 @@ button:hover:not(:disabled) {
   color: #333;
 }
 
-/* Price Cap Status Message */
 .price-cap-status {
   margin-top: 10px;
   font-weight: bold;
-  color: #d9534f; /* Bootstrap's red color for alerts */
+  color: #d9534f; 
 }
 
-/* Individual Lists Styling */
 .item-list, .shopping-list {
   flex: 2;
-  min-width: 300px; /* Ensures minimum width for responsiveness */
+  min-width: 300px; 
   background-color: #fff;
   padding: 20px;
   border-radius: 6px;
@@ -148,32 +142,23 @@ button:hover:not(:disabled) {
   display: flex;
   flex-direction: column;
   height: 750px;
+  overflow: auto; 
 }
 
-.item-list {
-  overflow-y: auto; /* Make Available Items scrollable if needed */
-}
-
-.shopping-list {
-  overflow: hidden; /* Prevent Shopping List from scrolling */
-}
-
-/* Plus-Minus Container Styles */
 .plus-minus-container {
   display: flex;
   align-items: center;
 }
 
 .plus-minus-container button {
-  padding: 1px 2px; /* Adjust padding for smaller buttons */
-  font-size: 1em;    /* Ensure consistent font size */
-  margin: 0px;        /* Space between buttons and quantity */
-  width: 20px;        /* Consistent button width */
-  height: 20px;       /* Consistent button height */
+  padding: 1px 2px; 
+  font-size: 1em;    
+  margin: 0px;      
+  width: 20px;       
+  height: 20px;       
   border-radius: 2px;
 }
 
-/* Optional: Custom Scrollbar for Available Items */
 .item-list::-webkit-scrollbar {
   width: 8px;
 }
