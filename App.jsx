@@ -182,6 +182,19 @@ function App() {
     setSortOrder(e.target.value);
   };
 
+  const getCategoryColor = (category) => {
+    const colors = {
+      Lunch: '#FFD700',
+      Pastry: '#FFB6C1',
+      Sweets: '#FFA07A',
+      'Specialty Coffee': '#8FBC8F',
+      Teas: '#20B2AA',
+      House: '#4682B4',
+      Snacks: '#DAA520',
+    };
+    return colors[category] || '#D3D3D3'; // Default color
+  };
+
   // Filter items based on search and category
   const filteredItems = shoppingItems.filter(item => {
     const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase());
@@ -259,10 +272,9 @@ function App() {
           <table>
             <thead>
               <tr>
-                <th>Category</th>
-                <th>Item Name</th>
-                <th>Price ($)</th>
-                <th>Action</th>
+                <th>Item</th>
+                <th>Price</th>
+                <th>Add</th>
               </tr>
             </thead>
             <tbody>
@@ -271,8 +283,15 @@ function App() {
                 const wouldExceedCap = isPriceCapEnabled && (totalPrice + item.price) > PRICE_CAP;
                 return (
                   <tr key={item.id}>
-                    <td>{item.category}</td>
-                    <td>{item.name}</td>
+                    <td>
+                      <div className="item-name">{item.name}</div>
+                      <div
+                        className="item-category"
+                        style={{ backgroundColor: getCategoryColor(item.category) }}
+                      >
+                        {item.category}
+                      </div>
+                    </td>
                     <td>{item.price.toFixed(2)}</td>
                     <td>
                       <button
@@ -280,7 +299,7 @@ function App() {
                         disabled={wouldExceedCap}
                         style={{
                           backgroundColor: wouldExceedCap ? '#aaa' : undefined,
-                          cursor: wouldExceedCap ? 'not-allowed' : 'pointer'
+                          cursor: wouldExceedCap ? 'not-allowed' : 'pointer',
                         }}
                       >
                         Add
@@ -302,39 +321,43 @@ function App() {
             <table>
               <thead>
                 <tr>
-                  <th>Category</th>
-                  <th>Item Name</th>
-                  <th>Price ($)</th>
+                  <th>Item</th>
+                  <th>Price</th>
                   <th>Quantity</th>
-                  <th>Subtotal ($)</th>
+                  <th>Subtotal</th>
                   <th>Action</th>
                 </tr>
               </thead>
               <tbody>
                 {selectedItems.map((item) => (
                   <tr key={item.id}>
-                    <td>{item.category}</td>
-                    <td>{item.name}</td>
+                    {/* Category as a colored box */}
+                    <td>
+                      <div className="item-name">{item.name}</div>
+                      <div
+                        className="item-category"
+                        style={{ backgroundColor: getCategoryColor(item.category) }}
+                      >
+                        {item.category}
+                      </div>
+                    </td>
                     <td>{item.price.toFixed(2)}</td>
                     <td>
-                      <div className="plus-minus-container">
+                      <div className="quantity-controls">
                         <button onClick={() => decrementItem(item.id)}>-</button>
-                        <span className="quantity">{item.quantity}</span>
+                        {item.quantity}
                         <button onClick={() => incrementItem(item.id)}>+</button>
                       </div>
                     </td>
                     <td>{(item.price * item.quantity).toFixed(2)}</td>
                     <td>
-                      <button onClick={() => removeAllItem(item.id)}>Remove</button>
+                      <button onClick={() => removeItem(item.id)}>Remove</button>
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
           )}
-          <div className="total-price">
-            <strong>Total Price: ${totalPrice.toFixed(2)}</strong>
-          </div>
         </div>
       </div>
     </div>
