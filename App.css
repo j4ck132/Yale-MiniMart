@@ -186,3 +186,16 @@ button:hover:not(:disabled) {
     min-width: 100%;
   }
 }
+
+.item-name {
+  font-weight: bold;
+}
+
+.item-category {
+  margin-top: 6px;
+  padding: 3px 8px;
+  border-radius: 10px;
+  font-size: 0.8rem;
+  color: white;
+  display: inline-block;
+}
