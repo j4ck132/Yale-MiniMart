@@ -314,7 +314,7 @@ function App() {
         
         {/* Shopping List */}
         <div className="shopping-list">
-          <h2>My Shopping List</h2>
+          <h2>My Shopping List 🛒</h2>
           {selectedItems.length === 0 ? (
             <p>No items selected.</p>
           ) : (
